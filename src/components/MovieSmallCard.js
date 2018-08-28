@@ -10,18 +10,21 @@ const CuttedString = styled.div`
     height: 25px;
     text-overflow: ellipsis;
     overflow: hidden;
-    width: 200px;
 `;
 
 const Title = CuttedString.extend`
     font-size: 110%;
     font-weight: bold;
+    cursor: pointer;
 `;
 
 const CardContainer = styled.div`
-    margin: 5px;
     display: inline-block;
     background-color: #ffffff;
+`;
+const TextBlock = styled.div`
+    padding: 0 5px;
+    width: 200px;
 `;
 
 const MovieSmallCard = ({
@@ -49,8 +52,10 @@ const MovieSmallCard = ({
                 size={300}
                 title={title}
             />
-            <Title onClick={onFilmClick}>{title}</Title>
-            <CuttedString>{`${genresString}`}</CuttedString>
+            <TextBlock>
+                <Title onClick={onFilmClick}>{title}</Title>
+                <CuttedString>{`${genresString}`}</CuttedString>
+            </TextBlock>
         </CardContainer>
     );
 };

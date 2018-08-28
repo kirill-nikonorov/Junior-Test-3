@@ -12,9 +12,11 @@ import styled from 'styled-components';
 import {object, func} from 'prop-types';
 
 const MovieContainer = styled.div`
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
+    padding: 5px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 200px);
+    justify-content: center;
+    grid-gap: 5px;
 `;
 
 class Content extends React.Component {

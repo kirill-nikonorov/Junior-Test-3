@@ -10,6 +10,7 @@ const ImageContainer = styled.div`
     position: relative;
     display: inline-block;
     overflow: hidden;
+    cursor: pointer;
 `;
 
 const StarredImageContainer = ({

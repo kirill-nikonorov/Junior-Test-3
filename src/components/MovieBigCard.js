@@ -11,6 +11,8 @@ const InformationBlock = styled.div`
     justify-content: space-between;
     padding: 0 15px;
     flex: auto;
+    align-items: center;
+    min-width: 333.3px;
 `;
 
 const renderFavouriteToggleButton = (isFavourite, onToggleFavourite) => {
@@ -43,7 +45,7 @@ const MovieBigCard = ({
 
     return (
         <div>
-            <div style={{display: 'flex', flexWrap: 'wrap'}}>
+            <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center'}}>
                 <StarredImage
                     onImageClick={onFilmClick}
                     onStarClick={onToggleFavourite}

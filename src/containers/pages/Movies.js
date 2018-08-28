@@ -12,9 +12,11 @@ import styled from 'styled-components';
 import {func, object, number, bool, shape, string} from 'prop-types';
 
 const MovieContainer = styled.div`
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
+    padding: 5px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 200px);
+    justify-content: center;
+    grid-gap: 5px;
 `;
 
 class Movies extends React.Component {
@@ -51,21 +53,19 @@ class Movies extends React.Component {
         const {hasMore, isFetching, movies, page} = this.props;
 
         return (
-            <div>
-                <InfiniteScroll
-                    pageStart={page}
-                    loadMore={() => {
-                        this.loadMore(page + 1);
-                    }}
-                    hasMore={hasMore && !isFetching}
-                    loader={<div key={0}>Loading ...</div>}>
-                    {movies ? (
-                        <MovieContainer>{movies.map(this.renderMovie)}</MovieContainer>
-                    ) : (
-                        <h2>almost ready</h2>
-                    )}
-                </InfiniteScroll>
-            </div>
+            <InfiniteScroll
+                pageStart={page}
+                loadMore={() => {
+                    this.loadMore(page + 1);
+                }}
+                hasMore={hasMore && !isFetching}
+                loader={<div key={0}>Loading ...</div>}>
+                {movies ? (
+                    <MovieContainer>{movies.map(this.renderMovie)}</MovieContainer>
+                ) : (
+                    <h2>almost ready</h2>
+                )}
+            </InfiniteScroll>
         );
     }
 
