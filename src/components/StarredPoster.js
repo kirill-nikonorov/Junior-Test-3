@@ -1,19 +1,19 @@
 import React from 'react';
 import {hot} from 'react-hot-loader';
-import {IMAGE_URL} from '../constants/apiConstants';
 import styled from 'styled-components';
+import {Poster} from './';
 
 import {Star} from './';
 import {string, bool, func, number} from 'prop-types';
 
-const ImageContainer = styled.div`
+const PosterContainer = styled.div`
     position: relative;
     display: inline-block;
     overflow: hidden;
     cursor: pointer;
 `;
 
-const StarredImageContainer = ({
+const StarredPoster = ({
     posterPath,
     title,
     isFavourite,
@@ -23,20 +23,14 @@ const StarredImageContainer = ({
     size = 300
 }) => {
     return (
-        <ImageContainer>
+        <PosterContainer>
             <Star onClick={onStarClick} isFavourite={isFavourite} dateOfStarring={dateOfStarring} />
-            <img
-                onClick={onImageClick}
-                src={`${IMAGE_URL}/w${size}${posterPath}`}
-                alt={`${title}`}
-                height={`${size}px`}
-                width={`${size / 1.5}px`}
-            />
-        </ImageContainer>
+            <Poster onClick={onImageClick} posterPath={posterPath} size={size} title={title} />
+        </PosterContainer>
     );
 };
 
-StarredImageContainer.propTypes = {
+StarredPoster.propTypes = {
     posterPath: string.isRequired,
     title: string.isRequired,
     onImageClick: func.isRequired,
@@ -46,4 +40,4 @@ StarredImageContainer.propTypes = {
     size: number
 };
 
-export default hot(module)(StarredImageContainer);
+export default hot(module)(StarredPoster);

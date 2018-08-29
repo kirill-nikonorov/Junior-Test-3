@@ -2,8 +2,9 @@ import React from 'react';
 import {hot} from 'react-hot-loader';
 import styled from 'styled-components';
 import {Button} from 'antd';
-import {StarredImage} from './';
+import {StarredPoster, Poster} from './';
 import {string, object, bool, func, number, shape, array} from 'prop-types';
+import {showModalImage} from '../service';
 
 const InformationBlock = styled.div`
     display: inline-flex;
@@ -14,6 +15,11 @@ const InformationBlock = styled.div`
     align-items: center;
     min-width: 333.3px;
 `;
+
+const CentredH1 = styled.h1`
+    text-align: center;
+`;
+const CentredH2 = CentredH1.withComponent('h2');
 
 const renderFavouriteToggleButton = (isFavourite, onToggleFavourite) => {
     return (
@@ -30,11 +36,12 @@ const renderFavouriteToggleButton = (isFavourite, onToggleFavourite) => {
 
 const MovieBigCard = ({
     movie: {overview, posterPath, title, genreIds, voteAverage, releaseDate},
+    size = 500,
     genres,
     isFavourite,
     onToggleFavourite,
     dateOfStarring,
-    onFilmClick
+    onFilmAttributeClick = () => showModalImage(Poster, {posterPath, size: '780', title})
 }) => {
     const genresString = genreIds.reduce(
         (str, id, index, arr) =>
@@ -46,20 +53,20 @@ const MovieBigCard = ({
     return (
         <div>
             <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center'}}>
-                <StarredImage
-                    onImageClick={onFilmClick}
+                <StarredPoster
+                    onImageClick={onFilmAttributeClick}
                     onStarClick={onToggleFavourite}
                     isFavourite={isFavourite}
                     dateOfStarring={dateOfStarring}
                     posterPath={posterPath}
-                    size={500}
+                    size={size}
                     title={title}
                 />
                 <InformationBlock>
-                    <h1>{title}</h1>
-                    <h2>{voteAverage} - Рейтинг пользователей </h2>
-                    <h2>{releaseDate} - Дата релиза</h2>
-                    <h2>{genresString}</h2>
+                    <CentredH1>{title}</CentredH1>
+                    <CentredH2>{voteAverage} - Рейтинг пользователей </CentredH2>
+                    <CentredH2>{releaseDate} - Дата релиза</CentredH2>
+                    <CentredH2>{genresString}</CentredH2>
                     {renderFavouriteToggleButton(isFavourite, onToggleFavourite)}
                 </InformationBlock>
             </div>
@@ -82,7 +89,8 @@ MovieBigCard.propTypes = {
         voteAverage: number.isRequired,
         releaseDate: string.isRequired
     }).isRequired,
-    onFilmClick: func.isRequired,
+    size: number,
+    onFilmAttributeClick: func,
     genres: object.isRequired,
     isFavourite: bool.isRequired,
     onToggleFavourite: func.isRequired,

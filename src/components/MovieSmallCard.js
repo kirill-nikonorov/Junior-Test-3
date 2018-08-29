@@ -3,7 +3,7 @@ import {hot} from 'react-hot-loader';
 import styled from 'styled-components';
 import {string, object, bool, func, number, shape, array} from 'prop-types';
 
-import {StarredImage} from './';
+import {StarredPoster} from './';
 
 const CuttedString = styled.div`
     white-space: nowrap;
@@ -27,9 +27,15 @@ const TextBlock = styled.div`
     width: 200px;
 `;
 
+const handleFilmAttributeClick = (id, history) => {
+    history && history.push(`/${id}`);
+};
+
 const MovieSmallCard = ({
-    movie: {posterPath, title, genreIds},
-    onFilmClick,
+    movie: {id, posterPath, title, genreIds},
+    size = 300,
+    history,
+    onFilmAttributeClick = () => handleFilmAttributeClick(id, history),
     genres,
     isFavourite,
     onToggleFavourite,
@@ -43,17 +49,17 @@ const MovieSmallCard = ({
     );
     return (
         <CardContainer>
-            <StarredImage
-                onImageClick={onFilmClick}
+            <StarredPoster
+                onImageClick={onFilmAttributeClick}
                 onStarClick={onToggleFavourite}
                 isFavourite={isFavourite}
                 dateOfStarring={dateOfStarring}
                 posterPath={posterPath}
-                size={300}
+                size={size}
                 title={title}
             />
             <TextBlock>
-                <Title onClick={onFilmClick}>{title}</Title>
+                <Title onClick={onFilmAttributeClick}>{title}</Title>
                 <CuttedString>{`${genresString}`}</CuttedString>
             </TextBlock>
         </CardContainer>
@@ -66,7 +72,9 @@ MovieSmallCard.propTypes = {
         title: string.isRequired,
         genreIds: array.isRequired
     }).isRequired,
-    onFilmClick: func.isRequired,
+    size: number,
+    history: object,
+    onFilmAttributeClick: func,
     genres: object.isRequired,
     isFavourite: bool.isRequired,
     onToggleFavourite: func.isRequired,

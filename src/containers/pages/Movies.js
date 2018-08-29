@@ -5,19 +5,11 @@ import {connect} from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroller';
 import MovieBasicInfoCardContainer from '../infoContainers/MovieBasicInfoCardContainer';
 import qs from 'qs';
-import {loadPopularMovies, loadGenres, loadMoviesByName} from '../../actions/index';
-
 import {fromJS} from 'immutable';
-import styled from 'styled-components';
-import {func, object, number, bool, shape, string} from 'prop-types';
 
-const MovieContainer = styled.div`
-    padding: 5px;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, 200px);
-    justify-content: center;
-    grid-gap: 5px;
-`;
+import {func, object, number, bool, shape, string} from 'prop-types';
+import {loadPopularMovies, loadGenres, loadMoviesByName} from '../../actions/index';
+import {MovieContainer} from '../assets/styles';
 
 class Movies extends React.Component {
     static propTypes = {

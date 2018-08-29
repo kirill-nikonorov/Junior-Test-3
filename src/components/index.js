@@ -2,7 +2,8 @@ import Header from './Header';
 import MovieSmallCard from './MovieSmallCard';
 import MovieBigCard from './MovieBigCard';
 import Star from './Star';
-import StarredImage from './StarredImage';
+import StarredPoster from './StarredPoster';
+import Poster from './Poster';
 import Bar from './Bar';
 
-export {MovieSmallCard, Star, StarredImage, MovieBigCard, Bar, Header};
+export {MovieSmallCard, Star, StarredPoster, MovieBigCard, Bar, Header, Poster};

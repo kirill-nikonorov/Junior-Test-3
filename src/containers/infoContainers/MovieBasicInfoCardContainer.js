@@ -13,17 +13,12 @@ class MovieBasicInfoCardContainer extends React.Component {
         movie: object.isRequired,
         history: object,
         onToggleFavourite: func,
-        component: func,
-        onFilmClick: func,
+        Component: func,
+        onFilmAttributeClick: func,
         genres: object.isRequired,
         favourites: object.isRequired,
         addToFavourite: func.isRequired,
         deleteFromFavourite: func.isRequired
-    };
-
-    handleFilmClick = id => {
-        const {history} = this.props;
-        history && history.push(`/${id}`);
     };
 
     toggleFavourite = (id, isFavourite) => {
@@ -34,28 +29,30 @@ class MovieBasicInfoCardContainer extends React.Component {
 
     render() {
         const {
-                component = MovieSmallCard,
+                Component = MovieSmallCard,
+                history,
                 genres,
                 favourites,
                 movie,
                 onToggleFavourite = (id, isFavourite) => {
                     this.toggleFavourite(id, isFavourite);
                 },
-                onFilmClick = () => {
-                    this.handleFilmClick(id);
-                }
+                onFilmAttributeClick
             } = this.props,
             id = `${movie.get('id')}`,
-            isFavourite = favourites.has(`${id}`);
+            isFavourite = favourites.has(id);
 
-        return React.createElement(component, {
-            movie: movie.toJS(),
-            genres: genres,
-            isFavourite: isFavourite,
-            dateOfStarring: favourites.get(id),
-            onFilmClick: onFilmClick,
-            onToggleFavourite: () => onToggleFavourite(id, isFavourite, movie, favourites)
-        });
+        return (
+            <Component
+                history={history}
+                movie={movie.toJS()}
+                genres={genres}
+                isFavourite={isFavourite}
+                dateOfStarring={favourites.get(id)}
+                onFilmAttributeClick={onFilmAttributeClick}
+                onToggleFavourite={() => onToggleFavourite(id, isFavourite, movie, favourites)}
+            />
+        );
     }
 
     shouldComponentUpdate({genres, favourites, movie}) {
@@ -67,7 +64,10 @@ class MovieBasicInfoCardContainer extends React.Component {
     }
 }
 
-const mapStateToProps = (state, {movie, history, onToggleFavourite, component, onFilmClick}) => {
+const mapStateToProps = (
+    state,
+    {movie, history, onToggleFavourite, component, onFilmAttributeClick}
+) => {
     const favourites = state.get('pagination').get('favourites'),
         genres = state.get('entities').get('genres') || fromJS({});
     return {
@@ -77,7 +77,7 @@ const mapStateToProps = (state, {movie, history, onToggleFavourite, component, o
         history,
         onToggleFavourite,
         component,
-        onFilmClick
+        onFilmAttributeClick
     };
 };
 

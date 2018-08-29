@@ -19,7 +19,7 @@ class MovieFullInfoPage extends React.Component {
 
         return (
             <div style={{padding: '5px'}}>
-                <MovieBasicInfoCardContainer movie={movie} component={MovieBigCard} />
+                <MovieBasicInfoCardContainer movie={movie} Component={MovieBigCard} />
                 <MovieAdditionalInfo id={id} history={history} />
             </div>
         );

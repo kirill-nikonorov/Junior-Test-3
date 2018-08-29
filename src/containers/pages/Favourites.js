@@ -8,16 +8,9 @@ import {loadMovieById, addToFavourite, deleteFromFavourite} from '../../actions/
 import {showInfoNotificationWithButton} from '../../service/index';
 
 import {fromJS} from 'immutable';
-import styled from 'styled-components';
 import {object, func} from 'prop-types';
 
-const MovieContainer = styled.div`
-    padding: 5px;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, 200px);
-    justify-content: center;
-    grid-gap: 5px;
-`;
+import {MovieContainer} from '../assets/styles';
 
 class Content extends React.Component {
     static propTypes = {
