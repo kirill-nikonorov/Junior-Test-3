@@ -1,11 +1,18 @@
 const merge = require("webpack-merge");
 const common = require("./webpack.common");
 const webpack = require('webpack');
-
-
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+let path = require("path");
 
 module.exports = merge(common, {
+    entry: {
+        client: ['webpack-hot-middleware/client', './src/index.js']
+    },
+
+    output: {
+        filename: '[name].bundle.js',
+        path: path.resolve(__dirname, './dist'),
+        publicPath: "/static/"
+    },
 
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
@@ -15,5 +22,6 @@ module.exports = merge(common, {
         contentBase: './public',
         disableHostCheck: true,
         hot: true
-    }
+    },
+    devtool: "source-map",
 });

@@ -23,7 +23,6 @@ import {RECOMMENDATIONS, SIMILAR_MOVIES, VIDEOS} from '../constants/paginationCo
 
 const entities = (state = fromJS({movies: {}, genres: {}}), action) => {
     if (action.payload && action.payload && action.payload.entities) {
-        //console.log(action.payload.entities);
         const newEntitiesInMap = fromJS(action.payload.entities);
         return state.mergeDeep(state, newEntitiesInMap);
     }

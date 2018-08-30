@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import {Button} from 'antd';
 import {StarredPoster, Poster} from './';
 import {string, object, bool, func, number, shape, array} from 'prop-types';
-import {showModalImage} from '../service';
+import {showModalWithComponent} from '../service';
 
 const InformationBlock = styled.div`
     display: inline-flex;
@@ -41,7 +41,7 @@ const MovieBigCard = ({
     isFavourite,
     onToggleFavourite,
     dateOfStarring,
-    onFilmAttributeClick = () => showModalImage(Poster, {posterPath, size: '780', title})
+    onFilmAttributeClick = () => showModalWithComponent(Poster, {posterPath, size: 'original', title})
 }) => {
     const genresString = genreIds.reduce(
         (str, id, index, arr) =>

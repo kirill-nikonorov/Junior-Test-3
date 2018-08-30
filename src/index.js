@@ -3,12 +3,15 @@ import React from 'react';
 import configureStore from './store/configureStore';
 import {BrowserRouter as Router} from 'react-router-dom';
 import Root from './containers/Root';
+import {Provider} from 'react-redux';
 
 let store = configureStore();
 
 render(
     <Router>
-        <Root store={store} />
+        <Provider store={store}>
+            <Root />
+        </Provider>
     </Router>,
     document.getElementById('root')
 );

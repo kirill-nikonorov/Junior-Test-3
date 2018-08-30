@@ -29,17 +29,17 @@ class MovieBasicInfoCardContainer extends React.Component {
 
     render() {
         const {
-                Component = MovieSmallCard,
-                history,
-                genres,
-                favourites,
-                movie,
-                onToggleFavourite = (id, isFavourite) => {
-                    this.toggleFavourite(id, isFavourite);
-                },
-                onFilmAttributeClick
-            } = this.props,
-            id = `${movie.get('id')}`,
+            Component = MovieSmallCard,
+            history,
+            genres,
+            favourites,
+            movie,
+            onToggleFavourite = (id, isFavourite) => {
+                this.toggleFavourite(id, isFavourite);
+            },
+            onFilmAttributeClick
+        } = this.props;
+        const id = `${movie.get('id')}`,
             isFavourite = favourites.has(id);
 
         return (

@@ -8,25 +8,18 @@ import qs from 'qs';
 import {fromJS} from 'immutable';
 
 import {func, object, number, bool, shape, string} from 'prop-types';
-import {loadPopularMovies, loadGenres, loadMoviesByName} from '../../actions/index';
-import {MovieContainer} from '../assets/styles';
+import {loadPopularMoviesPage, loadMoviesByNamePage} from '../../actions/index';
+import {MoviesContainer} from '../assets/styles';
 
 class Movies extends React.Component {
     static propTypes = {
-        location: shape({
-            search: string.isRequired
-        }).isRequired,
         history: object.isRequired,
         page: number.isRequired,
         movies: object.isRequired,
         hasMore: bool.isRequired,
-        ids: object.isRequired,
         isFetching: bool.isRequired,
-        movieEntities: object.isRequired,
         currentPagination: object.isRequired,
-        genres: object.isRequired,
-        loadMovies: func.isRequired,
-        loadGenres: func.isRequired
+        loadMovies: func.isRequired
     };
 
     renderMovie = movie => {
@@ -53,7 +46,7 @@ class Movies extends React.Component {
                 hasMore={hasMore && !isFetching}
                 loader={<div key={0}>Loading ...</div>}>
                 {movies ? (
-                    <MovieContainer>{movies.map(this.renderMovie)}</MovieContainer>
+                    <MoviesContainer>{movies.map(this.renderMovie)}</MoviesContainer>
                 ) : (
                     <h2>almost ready</h2>
                 )}
@@ -61,31 +54,24 @@ class Movies extends React.Component {
         );
     }
 
-    componentWillMount() {
-        const {genres, loadGenres} = this.props;
-        if (genres.size === 0) {
-            loadGenres();
-        }
-    }
-
     shouldComponentUpdate({currentPagination}) {
         return !currentPagination.equals(this.props.currentPagination);
     }
 }
 
-const chosePagination = (search, pagination) => {
-    const searchObj = qs.parse(search.substring(1)),
-        searchedName = searchObj.name && searchObj.name.toLowerCase();
-    return searchedName
-        ? pagination.get('searched').get(searchedName) || fromJS({})
-        : pagination.get('popular');
+const mapStateToProps = state => {
+    const movieEntities = state.get('entities').get('movies'),
+        pagination = state.get('pagination');
+
+    return {
+        movieEntities,
+        pagination
+    };
 };
 
-const mapStateToProps = (state, {history, location: {search}}) => {
-    const currentPagination = chosePagination(search, state.get('pagination')),
-        entities = state.get('entities'),
-        movieEntities = entities.get('movies'),
-        genres = entities.get('genres'),
+const mergeProps = ({movieEntities, pagination}, dispatchProps, {history, location: {search}}) => {
+    const searchObj = qs.parse(search.substring(1));
+    const currentPagination = choseNeededPagination(searchObj, pagination),
         isFetching = currentPagination.get('isFetching') || false,
         ids = currentPagination.get('ids') || fromJS([]),
         page = currentPagination.get('page') || 0,
@@ -95,36 +81,41 @@ const mapStateToProps = (state, {history, location: {search}}) => {
                 : currentPagination.get('hasMore'),
         movies = ids.map(id => movieEntities.get(`${id}`));
 
-    //console.log("currentPagination = ", typeof currentPagination.get('hasMore') === "undefined");
+    const actions = choseNeededAction(searchObj, dispatchProps);
+
     return {
-        page,
         movies,
+        page,
         hasMore,
-        ids,
         isFetching,
-        movieEntities,
         currentPagination,
-        genres,
-        history
+        history,
+        ...actions
     };
 };
-const mapDispatchToProps = (dispatch, {location: {search}}) => {
-    const searchObj = qs.parse(search.substring(1)),
-        searchedName = searchObj.name;
+
+const choseNeededPagination = ({name}, pagination) => {
+    const searchedName = name && name.toLowerCase();
+    return searchedName
+        ? pagination.get('searched').get(searchedName) || fromJS({})
+        : pagination.get('popular');
+};
+
+const choseNeededAction = ({name}, {loadMoviesByNamePage, loadPopularMoviesPage}) => {
+    const searchedName = name && name.toLowerCase();
 
     const loadMovies = searchedName
-        ? page => loadMoviesByName(page, searchedName)
-        : loadPopularMovies;
+        ? page => loadMoviesByNamePage(page, searchedName)
+        : loadPopularMoviesPage;
 
-    return {
-        ...bindActionCreators({loadMovies, loadGenres}, dispatch)
-    };
+    return {loadMovies};
 };
 
 export default compose(
     hot(module),
     connect(
         mapStateToProps,
-        mapDispatchToProps
+        {loadMoviesByNamePage, loadPopularMoviesPage},
+        mergeProps
     )
 )(Movies);

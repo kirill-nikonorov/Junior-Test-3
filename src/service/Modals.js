@@ -10,10 +10,13 @@ const ModalWrapper = styled.div`
     bottom: 0;
     background-color: #d3d3d3;
     overflow: auto;
-    text-align: center;
+    cursor: pointer;
+    display: flex;
+    justify-content: center ;
+    align-items: center;
 `;
 
-export const showModalImage = (Component, configs) => {
+export const showModalWithComponent = (Component, configs) => {
     this.node = document.createElement('div');
     document.body.appendChild(this.node);
 

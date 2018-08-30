@@ -1,7 +1,6 @@
 import React from 'react';
 import {hot} from 'react-hot-loader';
-import {Provider} from 'react-redux';
-import PropTypes from 'prop-types';
+import {bool, func, number, object, shape, string} from 'prop-types';
 import {Route, Switch} from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -11,6 +10,9 @@ import Favourites from './pages/Favourites';
 import MovieFullInfoPage from './pages/MovieFullInfoPage';
 
 import {BackTop} from 'antd';
+import {connect} from 'react-redux';
+import {compose} from 'redux';
+import {loadGenres} from '../actions';
 
 const UpButton = styled.div`
     height: 40px;
@@ -33,9 +35,13 @@ const AppContainer = styled.div`
     grid-gap: 10px;
 `;
 
-const Root = ({store}) => {
-    return (
-        <Provider store={store}>
+class Root extends React.Component {
+    static propTypes = {
+        genres: object.isRequired,
+        loadGenres: func.isRequired
+    };
+    render() {
+        return (
             <AppContainer>
                 <Route component={Header} />
                 <Switch>
@@ -47,12 +53,30 @@ const Root = ({store}) => {
                     <UpButton>UP</UpButton>
                 </BackTop>
             </AppContainer>
-        </Provider>
-    );
+        );
+    }
+
+    componentWillMount() {
+        const {genres, loadGenres} = this.props;
+        if (genres.size === 0) {
+            loadGenres();
+        }
+    }
+}
+
+const mapStateToProps = state => {
+    const genres = state.get('entities').get('genres');
+    return {
+        genres
+    };
 };
 
-Root.propTypes = {
-    store: PropTypes.object
-};
-
-export default hot(module)(Root);
+export default compose(
+    hot(module),
+    connect(
+        mapStateToProps,
+        {loadGenres},
+        undefined,
+        {pure: false}
+    )
+)(Root);

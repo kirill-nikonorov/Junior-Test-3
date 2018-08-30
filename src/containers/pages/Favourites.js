@@ -2,7 +2,7 @@ import React from 'react';
 import {compose} from 'redux';
 import {hot} from 'react-hot-loader';
 import {connect} from 'react-redux';
-import MovieCartContainer from '../infoContainers/MovieBasicInfoCardContainer';
+import MovieBasicInfoCardContainer from '../infoContainers/MovieBasicInfoCardContainer';
 
 import {loadMovieById, addToFavourite, deleteFromFavourite} from '../../actions/index';
 import {showInfoNotificationWithButton} from '../../service/index';
@@ -10,7 +10,7 @@ import {showInfoNotificationWithButton} from '../../service/index';
 import {fromJS} from 'immutable';
 import {object, func} from 'prop-types';
 
-import {MovieContainer} from '../assets/styles';
+import {MoviesContainer} from '../assets/styles';
 
 class Content extends React.Component {
     static propTypes = {
@@ -42,7 +42,7 @@ class Content extends React.Component {
             {history} = this.props;
 
         return (
-            <MovieCartContainer
+            <MovieBasicInfoCardContainer
                 movie={movie}
                 key={id}
                 history={history}
@@ -75,7 +75,7 @@ class Content extends React.Component {
         return (
             <div>
                 {!movies.isEmpty() ? (
-                    <MovieContainer>{movies.map(this.renderMovie)}</MovieContainer>
+                    <MoviesContainer>{movies.map(this.renderMovie)}</MoviesContainer>
                 ) : (
                     <h2>You don't have any favourite film</h2>
                 )}

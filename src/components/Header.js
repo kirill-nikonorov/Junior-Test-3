@@ -69,25 +69,25 @@ class Header extends React.Component {
         const menuItemName = pathname + search;
 
         return (
-                <HeaderContent>
-                    <Logo src="logo.jpg" width="100px" height="40px" onClick={this.pushHistory} />
-                    <Menu
-                        theme="dark"
-                        mode="horizontal"
-                        style={{
-                            lineHeight: '64px'
-                        }}
-                        onClick={this.pushHistory}
-                        selectedKeys={[`${menuItemName}`]}>
-                        <Menu.Item key="/">Популярные</Menu.Item>
-                        <Menu.Item key="/favourite">Избранное</Menu.Item>
-                    </Menu>
-                    <HeaderSearch
-                        onSearch={this.handleSearchClick}
-                        placeholder="input film name"
-                        enterButton="Go"
-                    />
-                </HeaderContent>
+            <HeaderContent>
+                <Logo src="logo.jpg" width="100px" height="40px" onClick={this.pushHistory} />
+                <Menu
+                    theme="dark"
+                    mode="horizontal"
+                    style={{
+                        lineHeight: '64px'
+                    }}
+                    onClick={this.pushHistory}
+                    selectedKeys={[`${menuItemName}`]}>
+                    <Menu.Item key="/">Популярные</Menu.Item>
+                    <Menu.Item key="/favourite">Избранное</Menu.Item>
+                </Menu>
+                <HeaderSearch
+                    onSearch={this.handleSearchClick}
+                    placeholder="input film name"
+                    enterButton="Go"
+                />
+            </HeaderContent>
         );
     }
 }
