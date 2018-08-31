@@ -2,18 +2,20 @@ import React from 'react';
 import {render} from 'react-dom';
 import styled from 'styled-components';
 
-const ModalWrapper = styled.div`
+const ModalWindow = styled.div`
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #d3d3d3;
-    overflow: auto;
     cursor: pointer;
-    display: flex;
-    justify-content: center ;
-    align-items: center;
+    overflow: auto;
+    background-color: #d3d3d3;
+    text-align: center;
+`;
+
+const ModalWrapper = styled.div`
+    display: inline-block;
 `;
 
 export const showModalWithComponent = (Component, configs) => {
@@ -25,9 +27,11 @@ export const showModalWithComponent = (Component, configs) => {
     };
 
     render(
-        <ModalWrapper onClick={closeModal}>
-            <Component {...configs} />
-        </ModalWrapper>,
+        <ModalWindow onClick={closeModal}>
+            <ModalWrapper>
+                <Component {...configs} />
+            </ModalWrapper>
+        </ModalWindow>,
         this.node
     );
 };

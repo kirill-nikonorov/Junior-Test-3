@@ -4,7 +4,7 @@ import {hot} from 'react-hot-loader';
 import {connect} from 'react-redux';
 import MovieBasicInfoCardContainer from '../infoContainers/MovieBasicInfoCardContainer';
 
-import {loadMovieById, addToFavourite, deleteFromFavourite} from '../../actions/index';
+import {loadMovieById, addMovieToFavourite, deleteMovieFromFavourite} from '../../actions/index';
 import {showInfoNotificationWithButton} from '../../service/index';
 
 import {fromJS} from 'immutable';
@@ -17,24 +17,30 @@ class Content extends React.Component {
         movieEntities: object.isRequired,
         favourites: object.isRequired,
         history: object.isRequired,
-        addToFavourite: func.isRequired,
-        deleteFromFavourite: func.isRequired,
+        addMovieToFavourite: func.isRequired,
+        deleteMovieFromFavourite: func.isRequired,
         loadMovieById: func.isRequired
     };
 
-    toggleFavouriteWithNotification = (id, isFavourite, movie, favourites) => {
-        const {addToFavourite, deleteFromFavourite} = this.props,
-            title = movie.get('title'),
-            dataOfStarring = favourites.get(id);
+    toggleFavouriteWithNotification = (id, isFavourite) => {
+        const {
+                addMovieToFavourite,
+                deleteMovieFromFavourite,
+                favourites,
+                movieEntities
+            } = this.props,
+            dataOfStarring = favourites.get(id),
+            title = movieEntities.get(`${id}`).get('title');
+
         if (isFavourite) {
-            deleteFromFavourite(id);
+            deleteMovieFromFavourite(id);
             showInfoNotificationWithButton(
                 `Вы удалили "${title}" из списка избранных , вернуть ?`,
                 () => {
-                    addToFavourite(id, dataOfStarring);
+                    addMovieToFavourite(id, dataOfStarring);
                 }
             );
-        } else addToFavourite(id);
+        } else addMovieToFavourite(id);
     };
 
     renderMovie = movie => {
@@ -46,9 +52,7 @@ class Content extends React.Component {
                 movie={movie}
                 key={id}
                 history={history}
-                onToggleFavourite={(id, isFavourite, movie, favourites) => {
-                    this.toggleFavouriteWithNotification(id, isFavourite, movie, favourites);
-                }}
+                onToggleFavourite={this.toggleFavouriteWithNotification}
             />
         );
     };
@@ -67,17 +71,17 @@ class Content extends React.Component {
                         return 0;
                     }
                 })
-                .reduce((movies, val, id) => {
-                    const entity = movieEntities.get(`${id}`);
-                    return entity ? movies.push(entity) : movies;
+                .reduce((movies, timeOfAdding, id) => {
+                    const movie = movieEntities.get(`${id}`);
+                    return movie ? movies.push(movie) : movies;
                 }, fromJS([]));
 
         return (
             <div>
-                {!movies.isEmpty() ? (
-                    <MoviesContainer>{movies.map(this.renderMovie)}</MoviesContainer>
-                ) : (
+                {movies.isEmpty() ? (
                     <h2>You don't have any favourite film</h2>
+                ) : (
+                    <MoviesContainer>{movies.map(this.renderMovie)}</MoviesContainer>
                 )}
             </div>
         );
@@ -114,6 +118,6 @@ export default compose(
     hot(module),
     connect(
         mapStateToProps,
-        {addToFavourite, deleteFromFavourite, loadMovieById}
+        {addMovieToFavourite, deleteMovieFromFavourite, loadMovieById}
     )
 )(Content);

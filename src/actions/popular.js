@@ -2,7 +2,7 @@ import {CALL_API} from '../middlewares/api';
 import {Schemas} from '../constants/schemas';
 import {popularRequest, popularSuccess} from '../lib/reduxActions/actions';
 
-const fetchPopularMoviesPage = page => ({
+const fetchPopularMovies = page => ({
     [CALL_API]: {
         endpoint: `/movie/popular`,
         types: [popularRequest, popularSuccess],
@@ -17,7 +17,6 @@ const fetchPopularMoviesPage = page => ({
     }
 });
 
-export const loadPopularMoviesPage = (page = 1) => dispatch => {
-    //console.log("loadPopularMoviesPage = " , page);
-    dispatch(fetchPopularMoviesPage(page));
+export const loadPopularMovies = (page = 1) => dispatch => {
+    dispatch(fetchPopularMovies(page));
 };

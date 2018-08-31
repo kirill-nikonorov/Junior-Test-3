@@ -2,7 +2,7 @@ import {CALL_API} from '../middlewares/api';
 import {Schemas} from '../constants/schemas';
 import {searchRequest, searchSuccess} from '../lib/reduxActions/actions';
 
-const fetchMoviesByNamePage = (page, name) => ({
+const fetchMoviesByName = (page, name) => ({
     [CALL_API]: {
         endpoint: `/search/movie`,
         types: [searchRequest, searchSuccess],
@@ -18,7 +18,6 @@ const fetchMoviesByNamePage = (page, name) => ({
     name
 });
 
-export const loadMoviesByNamePage = (page = 1, name) => dispatch => {
-    //console.log("loadMoviesWithName = " , name , page );
-    dispatch(fetchMoviesByNamePage(page, name));
+export const loadMoviesByName = (page = 1, name) => dispatch => {
+    dispatch(fetchMoviesByName(page, name));
 };

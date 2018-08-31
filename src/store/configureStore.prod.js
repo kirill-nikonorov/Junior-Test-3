@@ -2,7 +2,6 @@ import {createStore, applyMiddleware, compose} from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from '../reducers/rootReducer';
 import apiMiddleware from '../middlewares/api';
-import DevTools from '../containers/DevTools';
 import {fromJS} from 'immutable';
 
 import persistState from 'redux-localstorage';
@@ -25,8 +24,7 @@ const configureStore = () => {
         initialState,
         compose(
             persistState('', config),
-            applyMiddleware(thunk, apiMiddleware),
-            DevTools.instrument()
+            applyMiddleware(thunk, apiMiddleware)
         )
     );
 

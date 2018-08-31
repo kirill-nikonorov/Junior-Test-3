@@ -9,19 +9,20 @@ import MovieBasicInfoCardContainer from '../infoContainers/MovieBasicInfoCardCon
 import {string, object, bool, func, number} from 'prop-types';
 
 const loadIfNeeded = props => {
-    const {id, currentPaginationIds, isCurrentPaginationFetching, loadMore, hasMore} = props;
+    const {currentPaginationIds, isCurrentPaginationFetching, loadMovies, hasMore} = props;
 
-    if (currentPaginationIds.isEmpty() && hasMore && !isCurrentPaginationFetching) {
-        loadMore(id);
+    const shouldLoadMovies =
+        currentPaginationIds.isEmpty() && hasMore && !isCurrentPaginationFetching;
+    if (shouldLoadMovies) {
+        loadMovies();
     }
 };
 
 class MoviesBarContainer extends React.Component {
     static propTypes = {
-        id: string.isRequired,
         paginationName: string.isRequired,
         barName: string.isRequired,
-        loadMore: func.isRequired,
+        loadMovies: func.isRequired,
         history: object.isRequired,
         movieEntities: object.isRequired,
         currentPaginationPage: number.isRequired,
@@ -39,13 +40,12 @@ class MoviesBarContainer extends React.Component {
 
     render() {
         const {
-                id,
                 barName,
                 movieEntities,
                 hasMore,
                 currentPaginationIds,
                 isCurrentPaginationFetching,
-                loadMore,
+                loadMovies,
                 currentPaginationPage
             } = this.props,
             movies = currentPaginationIds.map(id => movieEntities.get(`${id}`));
@@ -57,7 +57,7 @@ class MoviesBarContainer extends React.Component {
                         barName={barName}
                         items={movies}
                         hasMore={hasMore}
-                        loadMore={() => loadMore(id, currentPaginationPage + 1)}
+                        loadMore={() => loadMovies(currentPaginationPage + 1)}
                         isFetching={isCurrentPaginationFetching}
                         renderItem={this.renderMovie}
                     />
@@ -91,7 +91,7 @@ class MoviesBarContainer extends React.Component {
     }
 }
 
-const mapStateToProps = (state, {id, paginationName, barName = '', loadMore, history}) => {
+const mapStateToProps = (state, {id, paginationName, barName = '', loadMovies, history}) => {
     const pagination = state.get('pagination'),
         movieEntities = state.get('entities').get('movies'),
         paginationPart = pagination.get(paginationName),
@@ -111,13 +111,12 @@ const mapStateToProps = (state, {id, paginationName, barName = '', loadMore, his
         barName,
         paginationName,
         history,
-        id,
         movieEntities,
         currentPaginationPage,
         isCurrentPaginationFetching,
         currentPaginationIds,
         hasMore,
-        loadMore
+        loadMovies
     };
 };
 

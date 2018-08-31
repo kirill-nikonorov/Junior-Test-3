@@ -6,16 +6,16 @@ import {string, func, any} from 'prop-types';
 const Poster = ({posterPath, size, title, onClick}) => {
     const isSizeNumber = typeof size === 'number';
     const posterSize = isSizeNumber ? `w${size}` : size;
-    const imgHeight = isSizeNumber && size;
-    const imgWidth = imgHeight && imgHeight / 1.5;
+    const imgHeight = isSizeNumber ? size + 'px' : undefined;
+    const imgWidth = imgHeight ? imgHeight / 1.5 + 'px' : undefined;
 
     return (
         <img
             onClick={onClick}
             src={`${IMAGE_URL}/${posterSize}${posterPath}`}
             alt={`${title}`}
-            height={imgHeight + 'px'}
-            width={imgWidth + 'px'}
+            height={imgHeight}
+            width={imgWidth}
         />
     );
 };

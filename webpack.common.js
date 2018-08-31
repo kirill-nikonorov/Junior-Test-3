@@ -1,5 +1,3 @@
-let path = require("path");
-
 
 module.exports = {
     module: {
@@ -12,5 +10,4 @@ module.exports = {
             use: ['style-loader', 'css-loader']
         }]
     },
-    devtool: "source-map",
 };

@@ -18,7 +18,6 @@ const fetchSimilarMoviesByMovieId = (id, page) => ({
     id
 });
 
-export const loadSimilarMoviesByMovieId = (id, page = 1) => dispatch => {
-    //console.log("loadMovieById = " , page);
-    dispatch(fetchSimilarMoviesByMovieId(id, page));
+export const loadSimilarMoviesByMovieId = (movieId, page = 1) => dispatch => {
+    dispatch(fetchSimilarMoviesByMovieId(movieId, page));
 };

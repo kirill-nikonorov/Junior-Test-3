@@ -8,7 +8,7 @@ import qs from 'qs';
 import {fromJS} from 'immutable';
 
 import {func, object, number, bool, shape, string} from 'prop-types';
-import {loadPopularMoviesPage, loadMoviesByNamePage} from '../../actions/index';
+import {loadPopularMovies, loadMoviesByName} from '../../actions/index';
 import {MoviesContainer} from '../assets/styles';
 
 class Movies extends React.Component {
@@ -48,7 +48,7 @@ class Movies extends React.Component {
                 {movies ? (
                     <MoviesContainer>{movies.map(this.renderMovie)}</MoviesContainer>
                 ) : (
-                    <h2>almost ready</h2>
+                    <h2>There is no any movie yet</h2>
                 )}
             </InfiniteScroll>
         );
@@ -101,12 +101,12 @@ const choseNeededPagination = ({name}, pagination) => {
         : pagination.get('popular');
 };
 
-const choseNeededAction = ({name}, {loadMoviesByNamePage, loadPopularMoviesPage}) => {
+const choseNeededAction = ({name}, {loadMoviesByName, loadPopularMovies}) => {
     const searchedName = name && name.toLowerCase();
 
     const loadMovies = searchedName
-        ? page => loadMoviesByNamePage(page, searchedName)
-        : loadPopularMoviesPage;
+        ? page => loadMoviesByName(page, searchedName)
+        : loadPopularMovies;
 
     return {loadMovies};
 };
@@ -115,7 +115,7 @@ export default compose(
     hot(module),
     connect(
         mapStateToProps,
-        {loadMoviesByNamePage, loadPopularMoviesPage},
+        {loadMoviesByName, loadPopularMovies},
         mergeProps
     )
 )(Movies);

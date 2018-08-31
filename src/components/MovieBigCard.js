@@ -41,7 +41,8 @@ const MovieBigCard = ({
     isFavourite,
     onToggleFavourite,
     dateOfStarring,
-    onFilmAttributeClick = () => showModalWithComponent(Poster, {posterPath, size: 'original', title})
+    onFilmAttributeClick = () =>
+        showModalWithComponent(Poster, {posterPath, size: 'original', title})
 }) => {
     const genresString = genreIds.reduce(
         (str, id, index, arr) =>

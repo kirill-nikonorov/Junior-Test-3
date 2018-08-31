@@ -18,6 +18,6 @@ const fetchRecommendationsByMovieId = (id, page) => ({
     id
 });
 
-export const loadRecommendationsByMovieId = (id, page = 1) => dispatch => {
-    dispatch(fetchRecommendationsByMovieId(id, page));
+export const loadRecommendationsByMovieId = (movieId, page = 1) => dispatch => {
+    dispatch(fetchRecommendationsByMovieId(movieId, page));
 };

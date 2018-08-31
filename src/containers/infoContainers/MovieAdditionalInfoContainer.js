@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import MoviesBarContainer from '../barContainers/MoviesBarContainer';
 import VideoBarContainer from '../barContainers/VideosBarContainer';
 import {
-    loadVideos,
+    loadMovieVideos,
     loadRecommendationsByMovieId,
     loadSimilarMoviesByMovieId
 } from '../../actions/index';
@@ -17,7 +17,7 @@ class MovieAdditionalInfo extends React.Component {
     static propTypes = {
         id: string.isRequired,
         history: object.isRequired,
-        loadVideos: func.isRequired,
+        loadMovieVideos: func.isRequired,
         loadRecommendationsByMovieId: func.isRequired,
         loadSimilarMoviesByMovieId: func.isRequired
     };
@@ -28,7 +28,7 @@ class MovieAdditionalInfo extends React.Component {
             id,
             loadRecommendationsByMovieId,
             loadSimilarMoviesByMovieId,
-            loadVideos
+            loadMovieVideos
         } = this.props;
 
         return (
@@ -37,20 +37,20 @@ class MovieAdditionalInfo extends React.Component {
                     id={id}
                     barName="Трейлеры"
                     paginationName={VIDEOS}
-                    loadMore={loadVideos}
+                    loadVideos={() => loadMovieVideos(id)}
                 />
                 <MoviesBarContainer
                     id={id}
                     barName="Рекомендации"
                     paginationName={RECOMMENDATIONS}
-                    loadMore={loadRecommendationsByMovieId}
+                    loadMovies={page => loadRecommendationsByMovieId(id, page)}
                     history={history}
                 />
                 <MoviesBarContainer
                     id={id}
                     barName="Похожие"
                     paginationName={SIMILAR_MOVIES}
-                    loadMore={loadSimilarMoviesByMovieId}
+                    loadMovies={page => loadSimilarMoviesByMovieId(id, page)}
                     history={history}
                 />
             </div>
@@ -73,6 +73,6 @@ export default compose(
     hot(module),
     connect(
         mapStateToProps,
-        {loadVideos, loadRecommendationsByMovieId, loadSimilarMoviesByMovieId}
+        {loadMovieVideos, loadRecommendationsByMovieId, loadSimilarMoviesByMovieId}
     )
 )(MovieAdditionalInfo);

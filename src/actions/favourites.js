@@ -2,7 +2,7 @@ import {pushToFavourite} from '../lib/reduxActions/actions';
 
 import {sliceFromFavourite} from '../lib/reduxActions/actions';
 
-export const addToFavourite = (id, time = Date.now()) => dispatch => {
+export const addMovieToFavourite = (id, time = Date.now()) => dispatch => {
     dispatch(
         pushToFavourite({
             id: `${id}`,
@@ -11,6 +11,6 @@ export const addToFavourite = (id, time = Date.now()) => dispatch => {
     );
 };
 
-export const deleteFromFavourite = id => dispatch => {
+export const deleteMovieFromFavourite = id => dispatch => {
     dispatch(sliceFromFavourite({id: `${id}`}));
 };

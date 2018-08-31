@@ -13,7 +13,6 @@ const fetchMovieVideos = id => ({
     id
 });
 
-export const loadVideos = id => dispatch => {
-    //console.log("loadMovieById = " , page);
+export const loadMovieVideos = id => dispatch => {
     dispatch(fetchMovieVideos(id));
 };

@@ -35,7 +35,7 @@ const MovieSmallCard = ({
     movie: {id, posterPath, title, genreIds},
     size = 300,
     history,
-    onFilmAttributeClick = () => handleFilmAttributeClick(id, history),
+    onFilmAttributeClick = handleFilmAttributeClick,
     genres,
     isFavourite,
     onToggleFavourite,
@@ -50,7 +50,7 @@ const MovieSmallCard = ({
     return (
         <CardContainer>
             <StarredPoster
-                onImageClick={onFilmAttributeClick}
+                onImageClick={() => onFilmAttributeClick(id, history)}
                 onStarClick={onToggleFavourite}
                 isFavourite={isFavourite}
                 dateOfStarring={dateOfStarring}
@@ -59,7 +59,7 @@ const MovieSmallCard = ({
                 title={title}
             />
             <TextBlock>
-                <Title onClick={onFilmAttributeClick}>{title}</Title>
+                <Title onClick={() => onFilmAttributeClick(id, history)}>{title}</Title>
                 <CuttedString>{`${genresString}`}</CuttedString>
             </TextBlock>
         </CardContainer>

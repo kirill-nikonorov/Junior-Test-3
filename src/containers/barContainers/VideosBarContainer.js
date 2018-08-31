@@ -8,20 +8,20 @@ import {fromJS} from 'immutable';
 import {string, object, bool, func} from 'prop-types';
 
 const loadIfNeeded = props => {
-    const {id, videos, isCurrentPaginationFetching, loadMore, hasMore} = props;
+    const {videos, isCurrentPaginationFetching, loadVideos, hasMore} = props;
 
-    if (videos.isEmpty() && hasMore && !isCurrentPaginationFetching) {
-        loadMore(id);
+    const shouldLoadVideos = videos.isEmpty() && hasMore && !isCurrentPaginationFetching;
+    if (shouldLoadVideos) {
+        loadVideos();
     }
 };
 
 class VideosBarContainer extends React.Component {
     static propTypes = {
-        id: string.isRequired,
         isCurrentPaginationFetching: bool.isRequired,
         videos: object.isRequired,
         hasMore: bool.isRequired,
-        loadMore: func.isRequired,
+        loadVideos: func.isRequired,
         paginationName: string.isRequired,
         barName: string.isRequired
     };
@@ -77,7 +77,7 @@ class VideosBarContainer extends React.Component {
     }
 }
 
-const mapStateToProps = (state, {id, paginationName, barName = '', loadMore}) => {
+const mapStateToProps = (state, {id, paginationName, barName = '', loadVideos}) => {
     const pagination = state.get('pagination'),
         paginationPart = pagination.get(paginationName),
         currentPagination = paginationPart.get(id) || fromJS({}),
@@ -91,11 +91,10 @@ const mapStateToProps = (state, {id, paginationName, barName = '', loadMore}) =>
     return {
         barName,
         paginationName,
-        id,
         isCurrentPaginationFetching,
         videos,
         hasMore,
-        loadMore
+        loadVideos
     };
 };
 
