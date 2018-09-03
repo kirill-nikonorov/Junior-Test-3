@@ -12,7 +12,7 @@ const CuttedString = styled.div`
     overflow: hidden;
 `;
 
-const Title = CuttedString.extend`
+const Title = styled(CuttedString)`
     font-size: 110%;
     font-weight: bold;
     cursor: pointer;

@@ -29,10 +29,10 @@ const Star = ({onClick, isFavourite, dateOfStarring}) => {
     return (
         <StarContainer>
             <Tooltip title={dateSting}>
-                <Icon
+                <img
+                    src={isFavourite ? 'golden-star.png' : 'black-star.png'}
+                    width="20px"
                     onClick={onClick}
-                    type={isFavourite ? 'star' : 'star-o'}
-                    style={{color: '#ffe857', fontSize: '30px'}}
                 />
             </Tooltip>
         </StarContainer>

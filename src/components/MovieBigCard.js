@@ -12,15 +12,14 @@ const InformationBlock = styled.div`
     justify-content: space-between;
     padding: 0 15px;
     flex: auto;
-    align-items: center;
-    min-width: 333.3px;
+    align-items: left;
 `;
 
-const CentredH1 = styled.h1`
-    text-align: center;
+const MainInfoContainer = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
 `;
-const CentredH2 = CentredH1.withComponent('h2');
-
 const renderFavouriteToggleButton = (isFavourite, onToggleFavourite) => {
     return (
         <Button
@@ -53,7 +52,7 @@ const MovieBigCard = ({
 
     return (
         <div>
-            <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center'}}>
+            <MainInfoContainer>
                 <StarredPoster
                     onImageClick={onFilmAttributeClick}
                     onStarClick={onToggleFavourite}
@@ -64,13 +63,13 @@ const MovieBigCard = ({
                     title={title}
                 />
                 <InformationBlock>
-                    <CentredH1>{title}</CentredH1>
-                    <CentredH2>{voteAverage} - Рейтинг пользователей </CentredH2>
-                    <CentredH2>{releaseDate} - Дата релиза</CentredH2>
-                    <CentredH2>{genresString}</CentredH2>
+                    <h1>{title}</h1>
+                    <h2>{voteAverage} - Рейтинг пользователей </h2>
+                    <h2>{releaseDate} - Дата релиза</h2>
+                    <h2>{genresString}</h2>
                     {renderFavouriteToggleButton(isFavourite, onToggleFavourite)}
                 </InformationBlock>
-            </div>
+            </MainInfoContainer>
             {overview && (
                 <div>
                     <hr />

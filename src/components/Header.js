@@ -7,41 +7,41 @@ import 'antd/dist/antd.css';
 
 const {Search} = Input;
 
+const MAX_WIDTH_TO_DELETE_LOGO = 600;
+const MAX_WIDTH_WITH_MULTIlINES = 480;
+
 const HeaderContent = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+
+    justify-content: center;
+    align-items: center;
+
     min-height: 64px;
     background-color: #000;
-
-    align-items: center;
-    justify-content: start;
-    display: grid;
-    grid-template-columns: 130px 250px 1fr;
-    grid-gap: 5px;
-
-    @media (max-width: 600px) {
-        justify-content: center;
-        justify-items: center;
-
-        grid-gap: 0;
-        grid-template-rows: 64px 50px;
-        grid-template-columns: 300px;
-    }
 `;
 
 const Logo = styled.img`
-    margin: 15px;
-    @media (max-width: 600px) {
+    margin-left: 15px;
+    @media (max-width: ${MAX_WIDTH_TO_DELETE_LOGO}px) {
         display: none;
-        grid-column: [logo];
     }
 `;
+
 const HeaderSearch = styled(Search)`
-    display: block;
-    width: 200px !important;
+    max-width: 200px !important;
     margin: 15px !important;
-    justify-self: end;
-    @media (max-width: 600px) {
-        justify-self: center;
+    margin-left: auto !important;
+
+    @media (max-width: ${MAX_WIDTH_WITH_MULTIlINES}px) {
+        margin-left: 15px !important;
     }
+`;
+const HeaderMenu = styled(Menu)`
+    line-height: 64px !important;
+    background: black !important;
+
+    margin: 0 15px !important;
 `;
 
 class Header extends React.Component {
@@ -71,17 +71,14 @@ class Header extends React.Component {
         return (
             <HeaderContent>
                 <Logo src="logo.jpg" width="100px" height="40px" onClick={this.pushHistory} />
-                <Menu
+                <HeaderMenu
                     theme="dark"
                     mode="horizontal"
-                    style={{
-                        lineHeight: '64px'
-                    }}
                     onClick={this.pushHistory}
                     selectedKeys={[`${menuItemName}`]}>
                     <Menu.Item key="/">Популярные</Menu.Item>
                     <Menu.Item key="/favourite">Избранное</Menu.Item>
-                </Menu>
+                </HeaderMenu>
                 <HeaderSearch
                     onSearch={this.handleSearchClick}
                     placeholder="input film name"

@@ -30,10 +30,6 @@ const AppContainer = styled.div`
     min-height: 100vh;
     background-color: #d3d3d3;
     max-width: 1030px;
-
-    justify-content: center;
-    grid-template-columns: repeat(auto-fill, 300px);
-    grid-gap: 10px;
 `;
 
 class Root extends React.Component {
@@ -41,13 +37,14 @@ class Root extends React.Component {
         genres: object.isRequired,
         loadGenres: func.isRequired
     };
+
     render() {
         return (
             <AppContainer>
                 <Route component={Header} />
                 <Switch>
                     <Route path="/favourite" component={Favourites} />
-                    <Route path="/:id" component={MovieFullInfoPage} />
+                    <Route path="/:id(\d+)" component={MovieFullInfoPage} />
                     <Route path="/" component={Movies} />
                 </Switch>
                 <BackTop>

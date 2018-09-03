@@ -7,7 +7,7 @@ const Poster = ({posterPath, size, title, onClick}) => {
     const isSizeNumber = typeof size === 'number';
     const posterSize = isSizeNumber ? `w${size}` : size;
     const imgHeight = isSizeNumber ? size + 'px' : undefined;
-    const imgWidth = imgHeight ? imgHeight / 1.5 + 'px' : undefined;
+    const imgWidth = imgHeight ? size / 1.5 + 'px' : undefined;
 
     return (
         <img
